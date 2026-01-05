@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { 
-  Users, 
-  Heart, 
-  HandCoins, 
-  TrendingUp, 
-  TrendingDown, 
-  Receipt, 
+import {
+  Users,
+  Heart,
+  HandCoins,
+  TrendingUp,
+  TrendingDown,
+  Receipt,
   LayoutDashboard,
   Menu,
-  X
+  X,
+  LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { APP_NAME, APP_SUBTITLE } from "@/config/appConfig";
 
 interface SidebarProps {
   activeTab: string;
@@ -30,6 +32,11 @@ const menuItems = [
 export const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleLogout = () => {
+    localStorage.removeItem("auth");
+    window.location.hash = "#/login";
+  };
+
   return (
     <>
       {/* Mobile menu button */}
@@ -42,17 +49,19 @@ export const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
 
       {/* Overlay for mobile */}
       {isOpen && (
-        <div 
+        <div
           className="lg:hidden fixed inset-0 bg-foreground/20 backdrop-blur-sm z-40"
           onClick={() => setIsOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <aside className={cn(
-        "fixed lg:static inset-y-0 right-0 z-40 w-72 bg-card border-l border-border flex flex-col transition-transform duration-300",
-        isOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0"
-      )}>
+      <aside
+        className={cn(
+          "fixed lg:static inset-y-0 right-0 z-40 w-72 bg-card border-l border-border flex flex-col transition-transform duration-300",
+          isOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0"
+        )}
+      >
         {/* Logo */}
         <div className="p-6 border-b border-border">
           <div className="flex items-center gap-3">
@@ -60,8 +69,12 @@ export const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
               <Heart className="h-6 w-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="font-bold text-lg text-foreground">جمعية الخير</h1>
-              <p className="text-xs text-muted-foreground">لتنمية المجتمع بمسير</p>
+              <h1 className="font-bold text-lg text-foreground">
+                {APP_NAME}
+              </h1>
+              <p className="text-xs text-muted-foreground">
+                {APP_SUBTITLE}
+              </p>
             </div>
           </div>
         </div>
@@ -87,7 +100,16 @@ export const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-border">
+        <div className="p-4 border-t border-border space-y-3">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg
+                       text-sm text-destructive hover:bg-destructive/10 transition"
+          >
+            <LogOut className="h-4 w-4" />
+            تسجيل خروج
+          </button>
+
           <div className="bg-muted/50 rounded-lg p-4">
             <p className="text-xs text-muted-foreground text-center">
               مسجلة برقم 1899 لسنة 2012
