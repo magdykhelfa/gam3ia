@@ -1,18 +1,18 @@
 import { useState } from "react";
-import {
-  Users,
-  Heart,
-  HandCoins,
-  TrendingUp,
-  TrendingDown,
-  Receipt,
+import { 
+  Users, 
+  Heart, 
+  HandCoins, 
+  TrendingUp, 
+  TrendingDown, 
+  Receipt, 
   LayoutDashboard,
   Menu,
   X,
-  LogOut,
+  LogOut
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { APP_NAME, APP_SUBTITLE } from "@/config/appConfig";
+import { Button } from "@/components/ui/button";
 
 interface SidebarProps {
   activeTab: string;
@@ -34,7 +34,7 @@ export const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
 
   const handleLogout = () => {
     localStorage.removeItem("auth");
-    window.location.hash = "#/login";
+    window.location.hash = "/login";
   };
 
   return (
@@ -49,7 +49,7 @@ export const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
 
       {/* Overlay for mobile */}
       {isOpen && (
-        <div
+        <div 
           className="lg:hidden fixed inset-0 bg-foreground/20 backdrop-blur-sm z-40"
           onClick={() => setIsOpen(false)}
         />
@@ -70,10 +70,10 @@ export const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
             </div>
             <div>
               <h1 className="font-bold text-lg text-foreground">
-                {APP_NAME}
+                نظام جمعية متكامل
               </h1>
               <p className="text-xs text-muted-foreground">
-                {APP_SUBTITLE}
+                لتنمية مجتمع أفضل
               </p>
             </div>
           </div>
@@ -101,14 +101,14 @@ export const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
 
         {/* Footer */}
         <div className="p-4 border-t border-border space-y-3">
-          <button
+          <Button
+            variant="destructive"
+            className="w-full flex items-center gap-2"
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg
-                       text-sm text-destructive hover:bg-destructive/10 transition"
           >
             <LogOut className="h-4 w-4" />
             تسجيل خروج
-          </button>
+          </Button>
 
           <div className="bg-muted/50 rounded-lg p-4">
             <p className="text-xs text-muted-foreground text-center">
